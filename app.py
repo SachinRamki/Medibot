@@ -42,7 +42,7 @@ def processRequest(req):
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
-    yql_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20thudialur&key=AIzaSyCYNf8FttdjFy8_SQORxX6ska6Xji4xEe0"
+    yql_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmaciesn%20thudialur&key=AIzaSyCYNf8FttdjFy8_SQORxX6ska6Xji4xEe0"
     result = urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
