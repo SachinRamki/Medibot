@@ -52,23 +52,23 @@ def makeWebhookResult():
     	#test = json.dumps([s['name'] for s in jsonResponse['results']], indent=4)
     	response = []
     	for i in jsonResponse['results']:
-        try:
-        	phoneUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid="
-            	resp = {}
-            	placeId = i['place_id']
-            	Url1 = phoneUrl+str(placeId)+keys
-           	phoneRes = urllib.urlopen(Url1)
-            	phoneResponse = json.loads(phoneRes.read())
-            	resp['phone'] = phoneResponse['result']['formatted_phone_number']
-            	resp['name'] = i['name']
-            	resp['address'] = i['formatted_address']
-            	response.append(resp)
-        except KeyError:
-            	resp['phone'] = "Not Provided"
-            	resp['name'] = i['name']
-            	resp['address'] = i['formatted_address']
-            	response.append(resp)
-            	continue
+		try:
+			phoneUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid="
+			resp = {}
+			placeId = i['place_id']
+			Url1 = phoneUrl+str(placeId)+keys
+			phoneRes = urllib.urlopen(Url1)
+			phoneResponse = json.loads(phoneRes.read())
+			resp['phone'] = phoneResponse['result']['formatted_phone_number']
+			resp['name'] = i['name']
+			resp['address'] = i['formatted_address']
+			response.append(resp)
+		except KeyError:
+			resp['phone'] = "Not Provided"
+			resp['name'] = i['name']
+			resp['address'] = i['formatted_address']
+			response.append(resp)
+			continue
 
     	stringBody=" "
     	for item in response:
