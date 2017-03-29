@@ -10,6 +10,7 @@ from urllib.error import HTTPError
 
 import json
 import os
+import urlib
 
 from flask import Flask
 from flask import request
@@ -45,8 +46,8 @@ def makeWebhookResult():
     googleResponse = urllib.urlopen(URL2)
     jsonResponse = json.loads(googleResponse.read())
     #pprint.pprint(jsonResponse)
-    test = json.dumps([s['name'] for s in jsonResponse['results']], indent=3)
-    speech = ""+test+ 
+    test = json.dumps([s['name'] for s in jsonResponse['results']], indent=2)
+    speech = test
     print("Response:")
     print(speech)
 
