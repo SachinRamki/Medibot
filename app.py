@@ -50,7 +50,7 @@ def makeWebhookResult():
     #test = json.dumps([s['name'] for s in jsonResponse['results']], indent=4)
     for i in jsonResponse['results']:
         test=json.dumps(i['name']),json.dumps(i['formatted_address'])
-        speechz = speechz + str(test)
+        speechz = speechz + str(test) + '\n\n'
     print("Response:")
     print(speechz)
 
