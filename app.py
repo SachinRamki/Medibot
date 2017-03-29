@@ -42,7 +42,7 @@ def processRequest(req):
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         return {}
-    yql_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20thudialur&key=AIzaSyCYNf8FttdjFy8_SQORxX6ska6Xji4xEe0&format=json"
+    yql_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20thudialur&key=AIzaSyCYNf8FttdjFy8_SQORxX6ska6Xji4xEe0"
     result = urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
@@ -65,13 +65,13 @@ def makeWebhookResult(data):
       #  return {}
 
     result = data.get('results')
-    if result is None:
-        return {}
+    #if result is None:
+       # return {}
 
     #channel = result.get('channel')
 	name = result.get('name')    
-	if name is None:
-        return {}
+	#if name is None:
+     #   return {}
 
     #item = channel.get('item')
     location = result.get('formatted_address')
@@ -88,8 +88,8 @@ def makeWebhookResult(data):
 
     #speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
      #        ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
-	speech = "Pharmacy " + result.get('name')+ " is at " + result.get('location') + " is open or not? " + result.get('opening_hours')
-
+	#speech = "Pharmacy " + result.get('name')+ " is at " + result.get('location') + " is open or not? " + result.get('opening_hours')
+ 	speech = "hi"
     print("Response:")
     print(speech)
 
