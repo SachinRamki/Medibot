@@ -37,7 +37,7 @@ def webhook():
 
 def processRequest(req):
 	global userLocation
-	if req.get("result").get("action") == "getUserLocation":	
+	if req.get("result").get("action") == "getUserLocation":
 		result = req.get("result")
 	    	parameters = result.get("parameters")
 	    	location = parameters.get("areaname")
