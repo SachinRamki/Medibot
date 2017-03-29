@@ -19,7 +19,7 @@ from flask import make_response
 keys= "&key=AIzaSyCUhQ42iZYv0A0ZVXdB0fLMga4Kj6lcyxU"
 # Flask app should start in global layout
 app = Flask(__name__)
-
+userLocation = ""
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -36,15 +36,20 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-
 def processRequest(req):
-    res = makeWebhookResult()
-    return res
+    if req.get("result").get("action") != "getUserLocation":
+        location = req.get()
+        result = req.get("result")
+	    parameters = result.get("parameters")
+	    city = parameters.get("areaname")
+        userLocation = city
+        res = makeWebhookResult()
+        return res
 
 def makeWebhookResult():
     speechz = ""
     # print(json.dumps(item, indent=4))
-    URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20thudialur&key=AIzaSyBa1S1nslOslJn0je4OcVJ38YmBYs51KkY"
+    URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20"+userLocation+"&key=AIzaSyBa1S1nslOslJn0je4OcVJ38YmBYs51KkY"
     googleResponse = urllib.urlopen(URL2)
     jsonResponse = json.loads(googleResponse.read())
     #pprint.pprint(jsonResponse)
