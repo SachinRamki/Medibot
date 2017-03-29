@@ -19,7 +19,6 @@ from flask import make_response
 keys= "&key=AIzaSyCUhQ42iZYv0A0ZVXdB0fLMga4Kj6lcyxU"
 # Flask app should start in global layout
 app = Flask(__name__)
-userLocation = " "
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -34,16 +33,12 @@ def webhook():
         return r
 
 def processRequest(req):
-        if req['result']['action'] == "getUserLocation":
-                result = req['result']
-		parameters = result['parameters']
-		city = parameters['areaname']
-        	userLocation = city
         res = makeWebhookResult()
         return res
 
 def makeWebhookResult():
         speechz = ""
+		userLocation = "thudialur"
     	# print(json.dumps(item, indent=4))
     	URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20"+userLocation+"&key=AIzaSyBa1S1nslOslJn0je4OcVJ38YmBYs51KkY"
     	googleResponse = urllib.urlopen(URL2)
@@ -52,23 +47,23 @@ def makeWebhookResult():
     	#test = json.dumps([s['name'] for s in jsonResponse['results']], indent=4)
     	response = []
     	for i in jsonResponse['results']:
-		try:
-			phoneUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid="
-			resp = {}
-			placeId = i['place_id']
-			Url1 = phoneUrl+str(placeId)+keys
-			phoneRes = urllib.urlopen(Url1)
-			phoneResponse = json.loads(phoneRes.read())
-			resp['phone'] = phoneResponse['result']['formatted_phone_number']
-			resp['name'] = i['name']
-			resp['address'] = i['formatted_address']
-			response.append(resp)
-		except KeyError:
-			resp['phone'] = "Not Provided"
-			resp['name'] = i['name']
-			resp['address'] = i['formatted_address']
-			response.append(resp)
-			continue
+			try:
+				phoneUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid="
+				resp = {}
+				placeId = i['place_id']
+				Url1 = phoneUrl+str(placeId)+keys
+				phoneRes = urllib.urlopen(Url1)
+				phoneResponse = json.loads(phoneRes.read())
+				resp['phone'] = phoneResponse['result']['formatted_phone_number']
+				resp['name'] = i['name']
+				resp['address'] = i['formatted_address']
+				response.append(resp)
+			except KeyError:
+				resp['phone'] = "Not Provided"
+				resp['name'] = i['name']
+				resp['address'] = i['formatted_address']
+				response.append(resp)
+				continue
 
     	stringBody=" "
     	for item in response:
@@ -90,7 +85,7 @@ def makeWebhookResult():
 
 
 if __name__ == '__main__':
-	
+
     	port = int(os.getenv('PORT', 5000))
 
     	print("Starting app on port %d" % port)
