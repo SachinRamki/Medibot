@@ -39,8 +39,8 @@ def processRequest(req):
 		parameters = result['parameters']
 		city = parameters['areaname']
         	userLocation = city
-        	res = makeWebhookResult()
-        	return res
+        res = makeWebhookResult()
+        return res
 
 def makeWebhookResult():
         speechz = ""
