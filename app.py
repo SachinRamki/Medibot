@@ -41,6 +41,8 @@ def processRequest(req):
 		result = req.get("result")
 	        parameters = result.get("parameters")
 	    	location = parameters.get("areaname")
+		if location=="":
+			return {}
 		userLocation = location
         	res = makeWebhookResult()
 		return res
