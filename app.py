@@ -23,79 +23,76 @@ userLocation = " "
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    req = request.get_json(silent=True, force=True)
-
-    print("Request:")
-    print(json.dumps(req, indent=4))
-
-    res = processRequest(req)
-
-    res = json.dumps(res, indent=4)
+	req = request.get_json(silent=True, force=True)
+    	print("Request:")
+    	print(json.dumps(req, indent=4))
+        res = processRequest(req)
+        res = json.dumps(res, indent=4)
     # print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
+        r = make_response(res)
+        r.headers['Content-Type'] = 'application/json'
+        return r
 
 def processRequest(req):
-    if req['result']['action'] == "getUserLocation":
-        result = req['result']
-	    parameters = result['parameters']
-	    city = parameters['areaname']
-        userLocation = city
-        res = makeWebhookResult()
-        return res
+        if req['result']['action'] == "getUserLocation":
+                result = req['result']
+		parameters = result['parameters']
+		city = parameters['areaname']
+        	userLocation = city
+        	res = makeWebhookResult()
+        	return res
 
 def makeWebhookResult():
-    speechz = ""
-    # print(json.dumps(item, indent=4))
-    URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20"+userLocation+"&key=AIzaSyBa1S1nslOslJn0je4OcVJ38YmBYs51KkY"
-    googleResponse = urllib.urlopen(URL2)
-    jsonResponse = json.loads(googleResponse.read())
-    #pprint.pprint(jsonResponse)
-    #test = json.dumps([s['name'] for s in jsonResponse['results']], indent=4)
-    response = []
-    for i in jsonResponse['results']:
+        speechz = ""
+    	# print(json.dumps(item, indent=4))
+    	URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20"+userLocation+"&key=AIzaSyBa1S1nslOslJn0je4OcVJ38YmBYs51KkY"
+    	googleResponse = urllib.urlopen(URL2)
+    	jsonResponse = json.loads(googleResponse.read())
+    	#pprint.pprint(jsonResponse)
+    	#test = json.dumps([s['name'] for s in jsonResponse['results']], indent=4)
+    	response = []
+    	for i in jsonResponse['results']:
         try:
-            phoneUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid="
-            resp = {}
-            placeId = i['place_id']
-            Url1 = phoneUrl+str(placeId)+keys
-
-            phoneRes = urllib.urlopen(Url1)
-            phoneResponse = json.loads(phoneRes.read())
-            resp['phone'] = phoneResponse['result']['formatted_phone_number']
-            resp['name'] = i['name']
-            resp['address'] = i['formatted_address']
-            response.append(resp)
+        	phoneUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid="
+            	resp = {}
+            	placeId = i['place_id']
+            	Url1 = phoneUrl+str(placeId)+keys
+           	phoneRes = urllib.urlopen(Url1)
+            	phoneResponse = json.loads(phoneRes.read())
+            	resp['phone'] = phoneResponse['result']['formatted_phone_number']
+            	resp['name'] = i['name']
+            	resp['address'] = i['formatted_address']
+            	response.append(resp)
         except KeyError:
-            resp['phone'] = "Not Provided"
-            resp['name'] = i['name']
-            resp['address'] = i['formatted_address']
-            response.append(resp)
-            continue
+            	resp['phone'] = "Not Provided"
+            	resp['name'] = i['name']
+            	resp['address'] = i['formatted_address']
+            	response.append(resp)
+            	continue
 
-    stringBody=" "
-    for item in response:
-        stringBody = stringBody + "\n\n"
-        stringBody = stringBody+"name: "+item['name']+"\n"+"address: "+item['address']+"\n"+"phone: "+item['phone']
+    	stringBody=" "
+    	for item in response:
+        	stringBody = stringBody + "\n\n"
+        	stringBody = stringBody+"name: "+item['name']+"\n"+"address: "+item['address']+"\n"+"phone: "+item['phone']
 
-    speechz = speechz + str(stringBody)
+    	speechz = speechz + str(stringBody)
 
-    print("Response:")
-    print(speechz)
+    	print("Response:")
+    	print(speechz)
 
-    return {
-        "speech": speechz,
-        "displayText": speechz,
+    	return {
+        	"speech": speechz,
+        	"displayText": speechz,
         # "data": data,
         # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
-    }
+        	"source": "apiai-weather-webhook-sample"
+   	 }
 
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+	
+    	port = int(os.getenv('PORT', 5000))
 
-    print("Starting app on port %d" % port)
+    	print("Starting app on port %d" % port)
 
-    app.run(debug=False, port=port, host='0.0.0.0')
+    	app.run(debug=False, port=port, host='0.0.0.0')
