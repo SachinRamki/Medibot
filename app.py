@@ -39,10 +39,10 @@ def processRequest(req):
 	global userLocation
 	if req.get("result").get("action") == "getUserLocation":
 		result = req.get("result")
-	    parameters = result.get("parameters")
-	    location = parameters.get("areaname")
+	        parameters = result.get("parameters")
+	    	location = parameters.get("areaname")
 		userLocation = location
-    res = makeWebhookResult()
+        res = makeWebhookResult()
 	return res
 
 def makeWebhookResult():
