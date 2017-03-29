@@ -42,8 +42,8 @@ def processRequest(req):
 	        parameters = result.get("parameters")
 	    	location = parameters.get("areaname")
 		userLocation = location
-        res = makeWebhookResult()
-	return res
+        	res = makeWebhookResult()
+		return res
 
 def makeWebhookResult():
 	global userLocation
