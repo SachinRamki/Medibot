@@ -39,15 +39,40 @@ def processRequest(req):
 	global userLocation
 	if req.get("result").get("action") == "getUserLocation":
 		result = req.get("result")
-	        parameters = result.get("parameters")
-	    	location = parameters.get("areaname")
+	    parameters = result.get("parameters")
+	    location = parameters.get("areaname")
 		if location=="":
 			return {"speech": "enter your locality",
         			"displayText": "enter your locality",
         			"source": "apiai-weather-webhook-sample"}
 		userLocation = location
-        	res = makeWebhookResult()
+        res = makeWebhookResult()
 		return res
+	elif req.get("result").get("action") == "getBMI":
+		result = req.get("result")
+	    parameters = result.get("parameters")
+	    heightInCm = parameters.get("height")
+		weight=parameters.get("weight")
+		height = float(heightInCm/100)
+		bmi = float(weight / float(height*height))
+		if (bmi>=18.5 and bmi<=25.0):
+			return {"speech": "congrats! you are healthy",
+        			"displayText": "congrats! you are healthy",
+        			"source": "apiai-weather-webhook-sample"}
+		elif(bmi>25.0 and bmi<=30.0):
+			return {"speech": "um! its good if you loose some weight",
+        			"displayText": "um! its good if you loose some weight",
+        			"source": "apiai-weather-webhook-sample"}
+		elif(bmi>30.0):
+			return {"speech": "too much weight ! soo bad",
+        			"displayText": "too much weight ! soo bad",
+        			"source": "apiai-weather-webhook-sample"}
+		else:
+			return {"speech": "underweight!",
+        			"displayText": "underweight!",
+        			"source": "apiai-weather-webhook-sample"}
+
+
 
 def makeWebhookResult():
 	global userLocation
