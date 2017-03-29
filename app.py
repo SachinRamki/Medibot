@@ -37,21 +37,21 @@ def webhook():
 
 def processRequest(req):
 	global userLocation
-	if req.get("result").get("action") == "getUserLocation":
+	if req.get("result").get("action") == "getUserLocation":	
 		result = req.get("result")
-	    parameters = result.get("parameters")
-	    location = parameters.get("areaname")
+	    	parameters = result.get("parameters")
+	    	location = parameters.get("areaname")
 		if location=="":
 			return {"speech": "enter your locality",
         			"displayText": "enter your locality",
         			"source": "apiai-weather-webhook-sample"}
 		userLocation = location
-        res = makeWebhookResult()
+        	res = makeWebhookResult()
 		return res
 	elif req.get("result").get("action") == "getBMI":
 		result = req.get("result")
-	    parameters = result.get("parameters")
-	    heightInCm = parameters.get("height")
+	    	parameters = result.get("parameters")
+	    	heightInCm = parameters.get("height")
 		weight=parameters.get("weight")
 		height = float(heightInCm/100)
 		bmi = float(weight / float(height*height))
