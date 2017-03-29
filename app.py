@@ -41,6 +41,7 @@ def processRequest(req):
     return res
 
 def makeWebhookResult():
+    speechz = "" 
     # print(json.dumps(item, indent=4))
     URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20thudialur&key=AIzaSyCYNf8FttdjFy8_SQORxX6ska6Xji4xEe0&format=json"
     googleResponse = urllib.urlopen(URL2)
@@ -49,13 +50,13 @@ def makeWebhookResult():
     #test = json.dumps([s['name'] for s in jsonResponse['results']], indent=4)
     for i in jsonResponse['results']:
         test=json.dumps(i['name']),json.dumps(i['formatted_address'])
-    speech = test
+        speechz = speechz + str(test)
     print("Response:")
-    print(speech)
+    print(speechz)
 
     return {
-        "speech": speech,
-        "displayText": speech,
+        "speech": speechz,
+        "displayText": speechz,
         # "data": data,
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
