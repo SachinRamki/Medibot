@@ -42,7 +42,9 @@ def processRequest(req):
 	        parameters = result.get("parameters")
 	    	location = parameters.get("areaname")
 		if location=="":
-			return {}
+			return {"speech": "enter your locality",
+        			"displayText": "enter your locality",
+        			"source": "apiai-weather-webhook-sample"}
 		userLocation = location
         	res = makeWebhookResult()
 		return res
