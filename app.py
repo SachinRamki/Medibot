@@ -16,6 +16,7 @@ from flask import Flask
 from flask import request
 from flask import make_response
 
+keys= "&key=AIzaSyCUhQ42iZYv0A0ZVXdB0fLMga4Kj6lcyxU"
 # Flask app should start in global layout
 app = Flask(__name__)
 
@@ -41,16 +42,40 @@ def processRequest(req):
     return res
 
 def makeWebhookResult():
-    speechz = "" 
+    speechz = ""
     # print(json.dumps(item, indent=4))
     URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20thudialur&key=AIzaSyBa1S1nslOslJn0je4OcVJ38YmBYs51KkY"
     googleResponse = urllib.urlopen(URL2)
     jsonResponse = json.loads(googleResponse.read())
     #pprint.pprint(jsonResponse)
     #test = json.dumps([s['name'] for s in jsonResponse['results']], indent=4)
+    response = []
     for i in jsonResponse['results']:
-        test=json.dumps(i['name']),json.dumps(i['formatted_address'])
-        speechz = speechz + str(test) + '\n\n'
+        try:
+            phoneUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid="
+            resp = {}
+            placeId = i['place_id']
+            Url1 = phoneUrl+str(placeId)+keys
+
+            phoneRes = urllib.urlopen(Url1)
+            phoneResponse = json.loads(phoneRes.read())
+            resp['phone'] = phoneResponse['result']['formatted_phone_number']
+            resp['name'] = i['name']
+            resp['address'] = i['formatted_address']
+            response.append(resp)
+        except KeyError:
+            resp['phone'] = "Not Provided"
+            resp['name'] = i['name']
+            resp['address'] = i['formatted_address']
+            response.append(resp)
+            continue
+
+    stringBody=" "
+    for item in response:
+        stringBody = stringBody + "\n\n"
+        stringBody = stringBody+"name: "+item['name']+"\n"+"address: "+item['address']+"\n"+"phone: "+item['phone']
+
+    speechz = speechz + str(stringBody)
 
     print("Response:")
     print(speechz)
