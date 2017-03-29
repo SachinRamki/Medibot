@@ -41,7 +41,7 @@ def makeWebhookResult():
         speechz = ""
     	# print(json.dumps(item, indent=4))
 	userLocation = "thudialur"
-    	URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20"+str(userLocation)+"&key=AIzaSyBa1S1nslOslJn0je4OcVJ38YmBYs51KkY"
+    	URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20"+userLocation+"&key=AIzaSyBa1S1nslOslJn0je4OcVJ38YmBYs51KkY"
     	googleResponse = urllib.urlopen(URL2)
     	jsonResponse = json.loads(googleResponse.read())
     	#pprint.pprint(jsonResponse)
