@@ -64,13 +64,13 @@ def makeWebhookResult(data):
     #if query is None:
       #  return {}
 
-    #result = query.get('results')
-    #if result is None:
-     #   return {}
+    result = data.get('results')
+    if result is None:
+        return {}
 
     #channel = result.get('channel')
 	name = result.get('name')    
-	if channel is None:
+	if name is None:
         return {}
 
     #item = channel.get('item')
