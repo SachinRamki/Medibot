@@ -38,7 +38,7 @@ def webhook():
 def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         return {}
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
+   
 
     yql_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmaciesn%20thudialur&key=AIzaSyCYNf8FttdjFy8_SQORxX6ska6Xji4xEe0"
     result = urlopen(yql_url).read()
@@ -53,18 +53,18 @@ def makeWebhookResult(data):
     #if query is None:
       #  return {}
 
-    result = data.get('results')
+   # result = data.get('results')
     #if result is None:
        # return {}
 
     #channel = result.get('channel')
-	name = result.get('name')    
+#	name = result.get('name')    
 	#if name is None:
      #   return {}
 
     #item = channel.get('item')
-    location = result.get('formatted_address')
-    openz = result.get('opening_hours')
+    #location = result.get('formatted_address')
+    #openz = result.get('opening_hours')
     #units = channel.get('units')
     #if (location is None) or (item is None) or (units is None):
      #   return {}
