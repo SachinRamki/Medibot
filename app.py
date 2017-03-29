@@ -19,7 +19,7 @@ from flask import make_response
 keys= "&key=AIzaSyCUhQ42iZYv0A0ZVXdB0fLMga4Kj6lcyxU"
 # Flask app should start in global layout
 app = Flask(__name__)
-userLocation = ""
+userLocation = " "
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -37,11 +37,10 @@ def webhook():
     return r
 
 def processRequest(req):
-    if req.get("result").get("action") == "getUserLocation":
-        location = req.get()
-        result = req.get("result")
-	    parameters = result.get("parameters")
-	    city = parameters.get("areaname")
+    if req['result']['action'] == "getUserLocation":
+        result = req['result']
+	    parameters = result['parameters']
+	    city = parameters['areaname']
         userLocation = city
         res = makeWebhookResult()
         return res
