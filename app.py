@@ -41,8 +41,12 @@ def processRequest(req):
 
 def makeWebhookResult():
     # print(json.dumps(item, indent=4))
-
-    speech = "Today in " 
+    URL2 = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=pharmacies%20in%20thudialur&key=AIzaSyCYNf8FttdjFy8_SQORxX6ska6Xji4xEe0&format=json"
+    googleResponse = urllib.urlopen(URL2)
+    jsonResponse = json.loads(googleResponse.read())
+    #pprint.pprint(jsonResponse)
+    test = json.dumps([s['name'] for s in jsonResponse['results']], indent=3)
+    speech = ""+test+ 
     print("Response:")
     print(speech)
 
