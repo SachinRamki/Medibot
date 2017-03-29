@@ -46,7 +46,7 @@ def makeWebhookResult():
     googleResponse = urllib.urlopen(URL2)
     jsonResponse = json.loads(googleResponse.read())
     #pprint.pprint(jsonResponse)
-    test = json.dumps([s['name'] for s in jsonResponse['results']], indent=2)
+    test = json.dumps([s['name'] for s in jsonResponse['results']], indent=4)
     speech = test
     print("Response:")
     print(speech)
