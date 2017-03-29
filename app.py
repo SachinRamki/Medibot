@@ -37,7 +37,7 @@ def webhook():
     return r
 
 def processRequest(req):
-    if req.get("result").get("action") != "getUserLocation":
+    if req.get("result").get("action") == "getUserLocation":
         location = req.get()
         result = req.get("result")
 	    parameters = result.get("parameters")
