@@ -56,16 +56,16 @@ def processRequest(req):
 		height = float(float(heightInCm)/100)
 		bmi = float(float(weight) / float(height*height))
 		if (bmi>=18.5 and bmi<=25.0):
-			return {"speech": "congrats! you are healthy",
-        			"displayText": "congrats! you are healthy",
+			return {"speech": "congrats! you are healthy and your BMI is "+str(bmi),
+        			"displayText": "congrats! you are healthy and your BMI is "+str(bmi),
         			"source": "apiai-weather-webhook-sample"}
 		elif(bmi>25.0 and bmi<=30.0):
-			return {"speech": "um! its good if you loose some weight",
-        			"displayText": "um! its good if you loose some weight",
+			return {"speech": "um! its good if you loose some weight and your BMI is "+str(bmi),
+        			"displayText": "um! its good if you loose some weight and your BMI is "+str(bmi),
         			"source": "apiai-weather-webhook-sample"}
 		elif(bmi>30.0):
-			return {"speech": "too much weight ! soo bad",
-        			"displayText": "too much weight ! soo bad",
+			return {"speech": "too much weight ! soo bad and your BMI is "+str(bmi),
+        			"displayText": "too much weight ! soo bad and your BMI is "+str(bmi),
         			"source": "apiai-weather-webhook-sample"}
 		else:
 			return {"speech": "underweight!",
